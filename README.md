@@ -1,6 +1,6 @@
 # React + TypeScript + Vite (no react compiler)
 
-**Refresh journey**
+## Refresh journey
 
 - 1 - React routing
   <br />
