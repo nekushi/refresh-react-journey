@@ -12,6 +12,6 @@ npm install react-router-dom
 
 and `<Outlet />` for passing props
 
-- 2 - Application of (React routing) topic
+- 2 - Application of (_React routing_) topic
   <br />
   Added simple UI, contents, and navigations
