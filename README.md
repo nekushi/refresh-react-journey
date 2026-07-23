@@ -3,10 +3,11 @@
 **Refresh journey**
 
 - 1 - React routing
+  <br />
   Use of
 
 ```bash
 npm install react-router-dom
 ```
 
-and **<Outlet />** for passing props
+and `<Outlet />` for passing props
