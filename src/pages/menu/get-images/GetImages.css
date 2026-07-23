@@ -1,0 +1,6 @@
+.get-images-img-layout {
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+  gap: 1rem;
+}

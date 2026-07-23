@@ -1,0 +1,16 @@
+.login-form-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+.login-header {
+  text-align: center;
+}

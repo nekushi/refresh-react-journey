@@ -1,0 +1,64 @@
+.menu-layout {
+  border: 1px solid maroon;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 100vh;
+}
+
+.menu-aside {
+  /* BOX MODEL */
+  padding: 1rem;
+
+  /* COLOR */
+  background-color: #adadad;
+}
+
+.menu-nav-layout {
+  /* BOX MODEL */
+  width: 96%;
+  margin-block: 3rem;
+  margin-inline: auto;
+
+  /* DISPLAY */
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+.menu-nav-layout > button {
+  /* TYPOGRAPHY */
+  text-align: left;
+  font-size: 15px;
+
+  /* COLORS */
+  background-color: bisque;
+  font-weight: 500;
+
+  /* BOX MODEL */
+  border: 1px solid bisque;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 0.5rem;
+}
+
+.menu-nav-layout > button:hover {
+  /* COLORS */
+  background-color: rgb(233, 190, 138);
+  font-weight: 600;
+
+  /* TRANSITION */
+  transition: all;
+  transition-duration: 300ms;
+}
+
+.logout {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.outlets {
+  border: 1px solid violet;
+  grid-column: span 5;
+  padding: 2rem;
+}
