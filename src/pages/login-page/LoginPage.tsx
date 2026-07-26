@@ -34,21 +34,3 @@ export default function LoginPage() {
     </>
   );
 }
-
-const dummyUser = [
-  {
-    id: 0,
-    username: "admin",
-    password: "admin",
-  },
-  {
-    id: 1,
-    username: "manager",
-    password: "manager",
-  },
-  {
-    id: 2,
-    username: "other",
-    password: "other",
-  },
-] as const;
