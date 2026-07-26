@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { TypeUser } from "../hooks/useAuth";
+import type { TypeUser } from "../hooks/useLoginForm";
 
 export const AuthContext = createContext<TypeAuthContext | null>(null);
 
