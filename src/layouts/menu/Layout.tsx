@@ -19,6 +19,7 @@ export default function MenuLayout() {
             {navLists.map((navList) => {
               return (
                 <button
+                  key={navList.name}
                   onClick={() => {
                     navigate(navList.href);
                   }}
