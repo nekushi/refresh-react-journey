@@ -4,13 +4,7 @@
 
 - 1 - React routing
   <br />
-  Use of
-
-```bash
-npm install react-router-dom
-```
-
-and `<Outlet />` for passing props
+  react-router-dom installation, and child Outlet component to pass props from parent component
 
 - 2 - Application of (_React routing_) topic
   <br />
