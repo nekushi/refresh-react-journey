@@ -39,6 +39,8 @@ const users = [
   },
 ];
 
+app.use(express.json());
+
 app.get(routes.home.path, (req, res) => {
   const query = req.query;
   console.log(query);
@@ -68,6 +70,41 @@ app.get("/users", (req, res, next) => {
   }
 
   return res.json(result);
+});
+
+app.post("/users", (req, res) => {
+  const body = req.body;
+  console.log(body);
+
+  return res.json({
+    id: body.id,
+    name: body.name,
+    message: "User created.",
+  });
+});
+
+app.put("/users/:id", (req, res) => {
+  const idParams = req.params.id;
+
+  res.json({
+    message: `User id ${idParams} putting data.`,
+  });
+});
+
+app.patch("/users/:id", (req, res) => {
+  const idParams = req.params.id;
+
+  res.json({
+    message: `User id ${idParams} patching data.`,
+  });
+});
+
+app.delete("/users/:id", (req, res) => {
+  const idParams = req.params.id;
+
+  res.json({
+    message: `User id ${idParams} deleted.`,
+  });
 });
 
 app.listen(port, () => {
