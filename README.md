@@ -17,3 +17,7 @@
 - 4 - Express.js introduction (on express branch)
   <br />
   Learn Express.js from scratch. Installed Express.js, run simplest express app, create github gist for installation. Understanding express routings
+
+- 5 - POSTMAN
+  <br />
+  Used POSTMAN for testing different http methods APIs from express/src/app.ts file
