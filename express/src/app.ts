@@ -56,32 +56,18 @@ app.get(routes.contact.path, (req: Request, res: Response) => {
 
 app.get("/users", (req, res, next) => {
   const queries = req.query;
-  console.log(queries);
 
-  const selectedSpecificUser = users.filter(
-    (user) => user.id === Number(queries.id) || user.name === queries.name,
-  );
+  let result = users;
 
-  if (selectedSpecificUser.length === 1) {
-    return res.json(selectedSpecificUser);
+  if (queries.id) {
+    result = users.filter((user) => String(user.id) === queries.id);
   }
 
-  const selectedUser = selectedSpecificUser.find((user) => {
-    const lookForValue = Object.values(queries).toString().toLowerCase();
-
-    return (
-      user.id === Number(lookForValue) ||
-      user.name.toLowerCase() === lookForValue
-    );
-  });
-
-  if (selectedUser) {
-    return res.json(selectedUser);
+  if (queries.name) {
+    result = result.filter((user) => user.name === queries.name);
   }
 
-  res.json({
-    message: "No user found.",
-  });
+  return res.json(result);
 });
 
 app.listen(port, () => {
