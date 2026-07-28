@@ -54,52 +54,35 @@ app.get(routes.contact.path, (req: Request, res: Response) => {
   res.json(routes.contact.message);
 });
 
-app.get(
-  "/users",
-  (req: Request, res: Response, next) => {
-    const queryKeyCount = Object.keys(req.query).length;
-    console.log(Object.keys(req.query).length);
+app.get("/users", (req, res, next) => {
+  const queries = req.query;
+  console.log(queries);
 
-    if (queryKeyCount === 1) {
-      return next();
-    }
+  const selectedSpecificUser = users.filter(
+    (user) => user.id === Number(queries.id) || user.name === queries.name,
+  );
 
-    const idQuery = req.query.id;
-    const nameQuery = req.query.name;
+  if (selectedSpecificUser.length === 1) {
+    return res.json(selectedSpecificUser);
+  }
 
-    const selectedUser = users.filter(
-      (user) => user.id === Number(idQuery) && user.name === nameQuery,
+  const selectedUser = selectedSpecificUser.find((user) => {
+    const lookForValue = Object.values(queries).toString().toLowerCase();
+
+    return (
+      user.id === Number(lookForValue) ||
+      user.name.toLowerCase() === lookForValue
     );
+  });
 
-    if (selectedUser.length === 0) {
-      res.json({
-        message: "No user found.",
-      });
-    } else {
-      res.json(selectedUser);
-    }
-  },
-  (req: Request, res: Response, next) => {
-    const idQuery = req.query.id;
+  if (selectedUser) {
+    return res.json(selectedUser);
+  }
 
-    const selectedUser = users.filter((user) => user.id === Number(idQuery));
-
-    if (selectedUser.length === 0 || !selectedUser) return next();
-
-    res.json(selectedUser);
-  },
-  (req: Request, res: Response, next) => {
-    const nameQuery = req.query.name;
-
-    const selectedUser = users.filter((user) => user.name === nameQuery);
-
-    if (selectedUser.length === 0 || !selectedUser) {
-      res.send("No user found.");
-    }
-
-    res.json(selectedUser);
-  },
-);
+  res.json({
+    message: "No user found.",
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server running at port ${port}`);
