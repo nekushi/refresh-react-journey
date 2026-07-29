@@ -21,3 +21,7 @@
 - 5 - POSTMAN
   <br />
   Used POSTMAN for testing different http methods APIs from express/src/app.ts file
+
+- 6 - `res` and `HTTP status codes`
+  <br />
+  Returning a proper response from API endpoint
