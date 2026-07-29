@@ -1,4 +1,9 @@
-import express, { type Express, type Request, type Response } from "express";
+import express, {
+  type Express,
+  type NextFunction,
+  type Request,
+  type Response,
+} from "express";
 
 const app: Express = express();
 const port = 3000;
@@ -8,18 +13,6 @@ const routes = {
     path: "/",
     message: {
       message: "Home",
-    },
-  },
-  about: {
-    path: "/about",
-    message: {
-      message: "About",
-    },
-  },
-  contact: {
-    path: "/contact",
-    message: {
-      message: "Contact",
     },
   },
 };
@@ -48,51 +41,54 @@ app.get(routes.home.path, (req, res) => {
   res.json(routes.home.message);
 });
 
-app.get(routes.about.path, (req: Request, res: Response) => {
-  res.json(routes.about.message);
-});
+const validateId = (req: ValidatedId, res: Response, next: NextFunction) => {
+  const idParam = Number(req.params.id);
 
-app.get(routes.contact.path, (req: Request, res: Response) => {
-  res.json(routes.contact.message);
-  // res.json({
-  //   message: "hello",
-  // });
-});
+  if (Number.isNaN(idParam)) {
+    return res.status(400).json({ message: statusMessages[400] });
+  }
 
-app.use((req, res, next) => {
-  console.log(req.method);
-  console.log(req.path);
+  req.convertedId = idParam;
 
   return next();
+};
+
+app.get("/users/:id", validateId, (req: ValidatedId, res, next) => {
+  const idParam = req.params.id;
+
+  const result = users.find((user) => user.id === req.convertedId);
+
+  return result
+    ? res.status(200).json(result)
+    : res.status(404).json({ message: "No user found." });
 });
 
-app.get("/users", (req, res, next) => {
-  const queries = req.query;
+const validateName = (req: Request, res: Response, next: NextFunction) => {
+  const name = req.body.name;
 
-  let result = users;
-
-  if (queries.id) {
-    result = result.filter((user) => String(user.id) === queries.id);
+  if (typeof name !== "string" || name.trim() === "") {
+    return res.status(400).json({ message: statusMessages[400] });
   }
 
-  if (queries.name) {
-    result = result.filter((user) => user.name === queries.name);
-  }
+  return next();
+};
 
-  return result.length === 0
-    ? res.status(404).json({ message: "No user found." })
-    : res.status(200).json(result);
-});
+const generateId = (req: Request, res: Response, next: NextFunction) => {
+  const randomId = Math.max(...users.map((user) => user.id)) + 1;
+  req.body.id = randomId;
 
-app.post("/users", (req, res) => {
-  const body = req.body;
-  console.log(body);
+  return next();
+};
 
-  return res.status(201).json({
-    id: body.id,
-    name: body.name,
-    message: statusMessages[201],
-  });
+app.post("/users", validateName, generateId, (req, res) => {
+  const newUser = {
+    id: req.body.id,
+    name: req.body.name,
+  };
+
+  users.push(newUser);
+
+  return res.status(201).json(newUser);
 });
 
 app.put("/users/:id", (req, res) => {
@@ -103,20 +99,31 @@ app.put("/users/:id", (req, res) => {
   });
 });
 
-app.patch("/users/:id", (req, res) => {
-  const idParams = req.params.id;
+app.patch("/users/:id", validateId, validateName, (req: ValidatedId, res) => {
+  const selectedUser = users.findIndex((user) => user.id === req.convertedId);
 
-  res.json({
-    message: `User id ${idParams} patching data.`,
-  });
+  if (selectedUser === -1) {
+    return res.status(404).json({ message: statusMessages[404] });
+  }
+
+  users[selectedUser] = {
+    id: req.convertedId!,
+    name: req.body.name,
+  };
+
+  res.status(200).json(users[selectedUser]);
 });
 
-app.delete("/users/:id", (req, res) => {
-  const idParams = req.params.id;
+app.delete("/users/:id", validateId, (req: ValidatedId, res) => {
+  const userIndex = users.findIndex((user) => user.id === req.convertedId);
 
-  res.json({
-    message: `User id ${idParams} deleted.`,
-  });
+  if (userIndex === -1) {
+    return res.status(404).json({ message: statusMessages[404] });
+  }
+
+  const deletedUser = users.splice(userIndex, 1);
+
+  return res.sendStatus(204);
 });
 
 app.get("/success", (req, res) => {
@@ -145,3 +152,7 @@ const statusMessages: Record<number, string> = {
   "404": "Not Found",
   "500": "Internal Server Error",
 };
+
+interface ValidatedId extends Request {
+  convertedId?: number;
+}
