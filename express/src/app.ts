@@ -54,6 +54,16 @@ app.get(routes.about.path, (req: Request, res: Response) => {
 
 app.get(routes.contact.path, (req: Request, res: Response) => {
   res.json(routes.contact.message);
+  // res.json({
+  //   message: "hello",
+  // });
+});
+
+app.use((req, res, next) => {
+  console.log(req.method);
+  console.log(req.path);
+
+  return next();
 });
 
 app.get("/users", (req, res, next) => {
@@ -62,24 +72,26 @@ app.get("/users", (req, res, next) => {
   let result = users;
 
   if (queries.id) {
-    result = users.filter((user) => String(user.id) === queries.id);
+    result = result.filter((user) => String(user.id) === queries.id);
   }
 
   if (queries.name) {
     result = result.filter((user) => user.name === queries.name);
   }
 
-  return res.json(result);
+  return result.length === 0
+    ? res.status(404).json({ message: "No user found." })
+    : res.status(200).json(result);
 });
 
 app.post("/users", (req, res) => {
   const body = req.body;
   console.log(body);
 
-  return res.json({
+  return res.status(201).json({
     id: body.id,
     name: body.name,
-    message: "User created.",
+    message: statusMessages[201],
   });
 });
 
@@ -107,6 +119,29 @@ app.delete("/users/:id", (req, res) => {
   });
 });
 
+app.get("/success", (req, res) => {
+  res.status(200).json({
+    message: statusMessages[200],
+  });
+});
+
+app.get("/missing", (req, res) => {
+  res.status(404).json({
+    message: statusMessages[404],
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server running at port ${port}`);
 });
+
+const statusMessages: Record<number, string> = {
+  "200": "OK",
+  "201": "Created",
+  "204": "No Content",
+  "400": "Bad Request",
+  "401": "Unauthorized",
+  "403": "Forbidden",
+  "404": "Not Found",
+  "500": "Internal Server Error",
+};
