@@ -29,3 +29,7 @@
 - 7 - Express folder structure
   <br />
   Relocate functions from `app.ts` to their respective folders
+
+- 8 - React and Express communication
+  <br />
+  Allow React to fetch data from Express with CORS (Cross-Origin Resource Sharing)
