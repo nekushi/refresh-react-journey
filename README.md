@@ -25,3 +25,7 @@
 - 6 - `res` and `HTTP status codes`
   <br />
   Returning a proper response from API endpoint
+
+- 7 - Express folder structure
+  <br />
+  Relocate functions from `app.ts` to their respective folders
