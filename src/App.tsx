@@ -6,22 +6,19 @@ import ImagesPage from "./pages/menu/get-images/GetImages";
 import SettingsPage from "./pages/menu/settings/Settings";
 
 import { AuthContext } from "./contexts/AuthContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import type { TypeUser } from "./hooks/useAuth";
+import HelloPage from "./pages/hello-page/HelloPage";
 
 export function App() {
-  // const userContext = useContext(AuthContext);
   const [user, setUser] = useState<TypeUser | null>(null);
 
-  // const user = userContext?.user
-  // const setUser = userContext?.setUser
-
   return (
-    // <AuthContext.Provider value={{ name, setName }}>
     <AuthContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
           <Route index element={<LoginPage />} />
+          <Route path="/hello" element={<HelloPage />} />
           <Route element={<MenuLayout />}>
             <Route path="/dashboard" element={<MenuDashboardPage />} />
             <Route path="/images" element={<ImagesPage />} />

@@ -5,14 +5,23 @@ import express, {
   type Response,
 } from "express";
 
+import cors from "cors";
+
 import { routes } from "./constants/defaultRoutes.ts";
 import { statusMessages } from "./constants/statusMessages.ts";
 
+import helloRoutes from "./routes/hello.routes.ts";
 import userRoutes from "./routes/user.routes.ts";
 
 export const app: Express = express();
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 
 app.get(routes.home.path, (req, res) => {
   const query = req.query;
@@ -21,6 +30,7 @@ app.get(routes.home.path, (req, res) => {
   res.json(routes.home.message);
 });
 
+app.use("/hello", helloRoutes);
 app.use("/users", userRoutes);
 
 app.get("/success", (req, res) => {
