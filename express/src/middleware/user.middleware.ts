@@ -19,9 +19,9 @@ export const validateName = (
   res: Response,
   next: NextFunction,
 ) => {
-  const name = req.body.name;
+  const username = req.body.username;
 
-  if (typeof name !== "string" || name.trim() === "") {
+  if (typeof username !== "string" || username.trim() === "") {
     return res.status(400).json({ message: statusMessages[400] });
   }
 

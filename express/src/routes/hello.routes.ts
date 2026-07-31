@@ -1,8 +1,13 @@
 import { Router } from "express";
-import { sayHelloFromBackend } from "../controllers/hello.controller.ts";
+import {
+  checkUser,
+  sayHelloFromBackend,
+} from "../controllers/hello.controller.ts";
+import { validateName } from "../middleware/user.middleware.ts";
 
 const router = Router();
 
 router.get("/", sayHelloFromBackend);
+router.post("/", validateName, checkUser);
 
 export default router;
