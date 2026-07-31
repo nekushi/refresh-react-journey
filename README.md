@@ -33,3 +33,7 @@
 - 8 - React and Express communication
   <br />
   Allow React to fetch data from Express with CORS (Cross-Origin Resource Sharing)
+
+- 9 - Simulation of login form
+  <br />
+  Simulate mini login form using hardcoded user data from server (express)
