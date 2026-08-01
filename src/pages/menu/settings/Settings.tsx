@@ -1,15 +1,13 @@
-import { useContext } from "react";
-import {
-  AuthContext,
-  type TypeAuthContext,
-} from "../../../contexts/AuthContext";
+import useAuth from "../../../hooks/useAuth";
+import UpdateUserForm from "../../../components/settings-form/UpdateUserForm";
 
 export default function SettingsPage() {
-  const auth = useContext(AuthContext);
+  const { auth } = useAuth();
 
   return (
     <div>
       <h1>This is settings page. Welcome, {auth?.user?.username}</h1>
+      <UpdateUserForm />
     </div>
   );
 }

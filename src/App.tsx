@@ -7,7 +7,7 @@ import SettingsPage from "./pages/menu/settings/Settings";
 
 import { AuthContext } from "./contexts/AuthContext";
 import { useState } from "react";
-import type { TypeUser } from "./hooks/useAuth";
+import type { TypeUser } from "./types/users.type";
 import HelloPage from "./pages/hello-page/HelloPage";
 
 export function App() {
