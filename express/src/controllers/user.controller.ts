@@ -72,10 +72,12 @@ export const deleteUser = (req: ReqId, res: Response) => {
   const userIndex = findUserIndex(req.id!);
 
   if (userIndex === -1) {
-    return res.status(404).json({ message: statusMessages[404] });
+    return res
+      .status(404)
+      .json({ type: "error", message: statusMessages[404] });
   }
 
-  const deletedUser = deleteCurrentUser(userIndex);
+  deleteCurrentUser(userIndex);
 
   return res.sendStatus(204);
 };

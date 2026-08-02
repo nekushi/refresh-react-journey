@@ -16,3 +16,10 @@ export type TypeResultResponse = Omit<
   TypeAuthResponse<TypeUser>,
   "ok" | "status"
 >;
+
+export type TypeAuthDeleteResponse = {
+  ok: boolean;
+  status: number;
+  type?: "error";
+  message?: string;
+};
