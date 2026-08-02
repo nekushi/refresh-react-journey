@@ -37,3 +37,7 @@
 - 9 - Simulation of login form
   <br />
   Simulate mini login form using hardcoded user data from server (express)
+
+- 10 - Working with dotenv
+  <br />
+  Understanding dotenv, config, dotenv architecture, and env variables compile time and runtime value
