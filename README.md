@@ -32,7 +32,7 @@
 
 - 8 - React and Express communication
   <br />
-  Allow React to fetch data from Express with CORS (Cross-Origin Resource Sharing)
+  Allow React to fetch data from Express with CORS (Cross-Origin Resource Sharing)x
 
 - 9 - Simulation of login form
   <br />
@@ -41,3 +41,7 @@
 - 10 - Working with dotenv
   <br />
   Understanding dotenv, config, dotenv architecture, and env variables compile time and runtime value
+
+- 11 - MongoDB and Mongoose
+  <br />
+  Installing MongoDB
