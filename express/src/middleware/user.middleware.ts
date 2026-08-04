@@ -6,7 +6,9 @@ export const validateId = (req: ReqId, res: Response, next: NextFunction) => {
   const idParam = Number(req.params.id);
 
   if (Number.isNaN(idParam)) {
-    return res.status(400).json({ message: statusMessages[400] });
+    return res
+      .status(400)
+      .json({ type: "error", message: statusMessages[400] });
   }
 
   req.id = idParam;
@@ -14,7 +16,7 @@ export const validateId = (req: ReqId, res: Response, next: NextFunction) => {
   return next();
 };
 
-export const validateName = (
+export const validateUsername = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -22,7 +24,26 @@ export const validateName = (
   const username = req.body.username;
 
   if (typeof username !== "string" || username.trim() === "") {
-    return res.status(400).json({ message: statusMessages[400] });
+    return res
+      .status(400)
+      .json({ type: "error", message: statusMessages[400] });
+  }
+
+  return next();
+};
+
+export const validateEmail = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const email = req.body.email;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!emailRegex.test(email)) {
+    return res
+      .status(400)
+      .json({ type: "error", message: statusMessages[400] });
   }
 
   return next();

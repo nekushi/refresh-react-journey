@@ -44,4 +44,8 @@
 
 - 11 - MongoDB and Mongoose
   <br />
-  Installing MongoDB
+  Installing MongoDB and mongoose
+
+- 12 - Refactoring from ram storage to disk storage
+  <br />
+  From JavaScript arrays as database to MongoDB database — dropping `const users = [...]`
