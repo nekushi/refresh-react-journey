@@ -3,7 +3,7 @@ import type { ReqId } from "../types/reqId.type.ts";
 import {
   fetchUsers,
   fetchUser,
-  // createNewUser,
+  createNewUser,
   findUserIndex,
   patchCurrentUser,
   deleteCurrentUser,
@@ -11,20 +11,23 @@ import {
   validateUser,
 } from "../services/user.service.ts";
 import { statusMessages } from "../constants/statusMessages.ts";
-import { users } from "../constants/users.ts";
 
-export const getUsers = (req: Request, res: Response) => {
-  const users = fetchUsers();
+export const getUsers = async (req: Request, res: Response) => {
+  const users = await fetchUsers();
 
-  return res.status(200).json(users);
+  return res
+    .status(200)
+    .json({ type: "success", message: statusMessages[200], users });
 };
 
-export const getUser = (req: ReqId, res: Response) => {
-  const user = fetchUser(req.id!);
+export const getUser = async (req: Request, res: Response) => {
+  const user = await fetchUser(req.params.id as string);
 
   return user
-    ? res.status(200).json(user)
-    : res.status(404).json({ message: "No user found." });
+    ? res
+        .status(200)
+        .json({ type: "success", message: statusMessages[200], user })
+    : res.status(404).json({ type: "error", message: "No user found." });
 };
 
 export const postLogin = (req: Request, res: Response) => {
@@ -46,38 +49,33 @@ export const postLogin = (req: Request, res: Response) => {
   // return res.status(201).json(newUser);
 };
 
-// export const createUser = (req: Request, res: Response) => {
-//   const name = req.body.name;
+export const createUser = async (req: Request, res: Response) => {
+  const { username, email } = req.body;
 
-//   const newUser = createNewUser(name);
+  const user = await createNewUser(username, email);
 
-//   return res.status(201).json(newUser);
-// };
+  return res
+    .status(201)
+    .json({ type: "success", message: statusMessages[201], user });
+};
 
-export const patchUser = (req: ReqId, res: Response) => {
-  const patchedUser = patchCurrentUser(
-    req.id!,
-    req.body.username,
-    req.body.password,
-  );
+export const patchUser = async (req: Request, res: Response) => {
+  const userId = req.params.id as string;
+  const { username, email } = req.body;
+
+  const patchedUser = await patchCurrentUser(userId, username, email);
 
   return patchedUser
     ? res
         .status(200)
         .json({ type: "success", message: statusMessages[200], patchedUser })
-    : res.status(400).json({ type: "error", message: "Something went wrong." });
+    : res.status(404).json({ type: "error", message: statusMessages[404] });
 };
 
-export const deleteUser = (req: ReqId, res: Response) => {
-  const userIndex = findUserIndex(req.id!);
+export const deleteUser = async (req: Request, res: Response) => {
+  const deletedUser = await deleteCurrentUser(req.params.id as string);
 
-  if (userIndex === -1) {
-    return res
-      .status(404)
-      .json({ type: "error", message: statusMessages[404] });
-  }
-
-  deleteCurrentUser(userIndex);
-
-  return res.sendStatus(204);
+  return !deletedUser
+    ? res.status(404).json({ type: "error", message: statusMessages[404] })
+    : res.sendStatus(204);
 };

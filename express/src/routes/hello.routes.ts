@@ -3,11 +3,11 @@ import {
   checkUser,
   sayHelloFromBackend,
 } from "../controllers/hello.controller.ts";
-import { validateName } from "../middleware/user.middleware.ts";
+import { validateUsername } from "../middleware/user.middleware.ts";
 
 const router = Router();
 
 router.get("/", sayHelloFromBackend);
-router.post("/", validateName, checkUser);
+router.post("/", validateUsername, checkUser);
 
 export default router;
