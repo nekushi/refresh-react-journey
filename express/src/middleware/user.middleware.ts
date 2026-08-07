@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import type { ReqId } from "../types/reqId.type.ts";
 import { statusMessages } from "../constants/statusMessages.ts";
+import mongoose from "mongoose";
 
 export const validateId = (req: ReqId, res: Response, next: NextFunction) => {
   const idParam = Number(req.params.id);
@@ -12,6 +13,20 @@ export const validateId = (req: ReqId, res: Response, next: NextFunction) => {
   }
 
   req.id = idParam;
+
+  return next();
+};
+
+export const validateObjectId = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id as string)) {
+    return res
+      .status(400)
+      .json({ type: "error", message: "You entered an invalid ObjectId." });
+  }
 
   return next();
 };

@@ -10,15 +10,18 @@ import {
 } from "../controllers/user.controller.ts";
 import {
   validateEmail,
+  validateObjectId,
   validateUsername,
 } from "../middleware/user.middleware.ts";
 
 const router = Router();
 
+router.param("id", validateObjectId);
+
 router.get("/", getUsers);
 router.get("/:id", getUser);
-// router.post("/", validateUsername, validateEmail, postLogin);
 router.post("/", validateUsername, validateEmail, createUser);
+// router.post("/", validateUsername, validateEmail, postLogin);
 router.patch("/:id", validateUsername, validateEmail, patchUser);
 router.delete("/:id", deleteUser);
 
