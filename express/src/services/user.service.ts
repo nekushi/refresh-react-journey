@@ -2,13 +2,18 @@ import User from "../models/User.ts";
 
 import { users } from "../constants/users.ts";
 import type { TypeUser } from "../types/user.type.ts";
+import { AppError } from "../utils/appError.ts";
 
 export const fetchUsers = async () => {
   return await User.find();
 };
 
 export const fetchUser = async (id: string) => {
-  return await User.findById(id);
+  const user = await User.findById(id);
+
+  if (!user) throw new AppError(404, "User not found.");
+
+  return user;
 };
 
 export const findUser = (username: string) => {
@@ -67,7 +72,7 @@ export const patchCurrentUser = async (
     },
   );
 
-  if (!patchedUser) return null;
+  if (!patchedUser) throw new AppError(404, "User not found.");
 
   return patchedUser;
 };
@@ -75,7 +80,7 @@ export const patchCurrentUser = async (
 export const deleteCurrentUser = async (id: string) => {
   const deletedUser = await User.findOneAndDelete({ _id: id });
 
-  if (!deletedUser) return null;
+  if (!deletedUser) throw new AppError(404, "User not found.");
 
   return deletedUser;
 };

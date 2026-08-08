@@ -12,6 +12,7 @@ import { statusMessages } from "./constants/statusMessages.ts";
 
 import helloRoutes from "./routes/hello.routes.ts";
 import userRoutes from "./routes/user.routes.ts";
+import { errorHandler } from "./middleware/errorHandler.ts";
 
 export const app: Express = express();
 
@@ -44,3 +45,5 @@ app.get("/missing", (req, res) => {
     message: statusMessages[404],
   });
 });
+
+app.use(errorHandler);

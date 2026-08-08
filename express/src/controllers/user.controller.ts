@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import type { ReqId } from "../types/reqId.type.ts";
 import {
   fetchUsers,
   fetchUser,
@@ -11,6 +10,7 @@ import {
   validateUser,
 } from "../services/user.service.ts";
 import { statusMessages } from "../constants/statusMessages.ts";
+import { AppError } from "../utils/appError.ts";
 
 export const getUsers = async (req: Request, res: Response) => {
   const users = await fetchUsers();
@@ -23,11 +23,9 @@ export const getUsers = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
   const user = await fetchUser(req.params.id as string);
 
-  return user
-    ? res
-        .status(200)
-        .json({ type: "success", message: statusMessages[200], user })
-    : res.status(404).json({ type: "error", message: "No user found." });
+  return res
+    .status(200)
+    .json({ type: "success", message: statusMessages[200], user });
 };
 
 export const postLogin = (req: Request, res: Response) => {
@@ -65,17 +63,13 @@ export const patchUser = async (req: Request, res: Response) => {
 
   const patchedUser = await patchCurrentUser(userId, username, email);
 
-  return patchedUser
-    ? res
-        .status(200)
-        .json({ type: "success", message: statusMessages[200], patchedUser })
-    : res.status(404).json({ type: "error", message: statusMessages[404] });
+  return res
+    .status(200)
+    .json({ type: "success", message: statusMessages[200], patchedUser });
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-  const deletedUser = await deleteCurrentUser(req.params.id as string);
+  await deleteCurrentUser(req.params.id as string);
 
-  return !deletedUser
-    ? res.status(404).json({ type: "error", message: statusMessages[404] })
-    : res.sendStatus(204);
+  return res.sendStatus(204);
 };

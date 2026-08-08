@@ -13,16 +13,18 @@ import {
   validateObjectId,
   validateUsername,
 } from "../middleware/user.middleware.ts";
+import { asyncHandler } from "../utils/asyncHandler.ts";
 
 const router = Router();
 
 router.param("id", validateObjectId);
 
-router.get("/", getUsers);
-router.get("/:id", getUser);
-router.post("/", validateUsername, validateEmail, createUser);
+router.get("/", asyncHandler(getUsers));
+router.get("/:id", asyncHandler(getUser));
+router.post("/", validateUsername, validateEmail, asyncHandler(createUser));
 // router.post("/", validateUsername, validateEmail, postLogin);
-router.patch("/:id", validateUsername, validateEmail, patchUser);
-router.delete("/:id", deleteUser);
+router.patch("/:id", validateUsername, validateEmail, asyncHandler(patchUser));
+// router.delete("/:id", deleteUser);
+router.delete("/:id", asyncHandler(deleteUser));
 
 export default router;
