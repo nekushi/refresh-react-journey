@@ -49,3 +49,9 @@
 - 12 - Refactoring from ram storage to disk storage
   <br />
   From JavaScript arrays as database to MongoDB database — dropping `const users = [...]`
+
+- 13 - Global error handling
+  <br />
+  - Create an asyncHandler to avoid try/catch in every service layer — catches error in service layer.
+  - Create an AppError that extends the Error object to pass error status code.
+  - Create an errorHandler to throw an error Response to the frontend.
