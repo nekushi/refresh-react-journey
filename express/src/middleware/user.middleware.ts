@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import type { ReqId } from "../types/reqId.type.ts";
 import { statusMessages } from "../constants/statusMessages.ts";
 import mongoose from "mongoose";
+import { AppError } from "../utils/AppError.ts";
 
 export const validateId = (req: ReqId, res: Response, next: NextFunction) => {
   const idParam = Number(req.params.id);
@@ -15,7 +16,7 @@ export const validateId = (req: ReqId, res: Response, next: NextFunction) => {
   req.id = idParam;
 
   return next();
-};
+}; // unused?? but i dont want to remove it, yet XD
 
 export const validateObjectId = (
   req: Request,
@@ -23,9 +24,7 @@ export const validateObjectId = (
   next: NextFunction,
 ) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id as string)) {
-    return res
-      .status(400)
-      .json({ type: "error", message: "You entered an invalid ObjectId." });
+    throw new AppError(400, "You entered an invalid ObjectId.");
   }
 
   return next();
@@ -39,9 +38,7 @@ export const validateUsername = (
   const username = req.body.username;
 
   if (typeof username !== "string" || username.trim() === "") {
-    return res
-      .status(400)
-      .json({ type: "error", message: statusMessages[400] });
+    throw new AppError(400, "Invalid username.");
   }
 
   return next();
@@ -56,9 +53,7 @@ export const validateEmail = (
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!emailRegex.test(email)) {
-    return res
-      .status(400)
-      .json({ type: "error", message: statusMessages[400] });
+    throw new AppError(400, "Invalid email.");
   }
 
   return next();
