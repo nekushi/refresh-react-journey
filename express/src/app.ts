@@ -12,6 +12,8 @@ import { statusMessages } from "./constants/statusMessages.ts";
 
 import helloRoutes from "./routes/hello.routes.ts";
 import userRoutes from "./routes/user.routes.ts";
+import authRoutes from "./routes/auth.routes.ts";
+
 import { errorHandler } from "./middleware/errorHandler.ts";
 
 export const app: Express = express();
@@ -33,6 +35,7 @@ app.get(routes.home.path, (req, res) => {
 
 app.use("/hello", helloRoutes);
 app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/success", (req, res) => {
   res.status(200).json({
