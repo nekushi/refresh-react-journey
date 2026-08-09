@@ -56,7 +56,11 @@ export const createNewUser = async (
     password: hashedPassword,
   };
 
-  return await User.create(newUser);
+  const user = await User.create(newUser);
+  const userObj = user.toObject();
+  delete userObj.password;
+
+  return userObj;
 };
 
 export const findUserIndex = (id: string) => {
@@ -87,7 +91,10 @@ export const patchCurrentUser = async (
 
   if (!patchedUser) throw new AppError(404, "User not found.");
 
-  return patchedUser;
+  const userObj = patchedUser.toObject();
+  delete userObj.password;
+
+  return userObj;
 };
 
 export const deleteCurrentUser = async (id: string) => {
