@@ -1,5 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { env } from "./config/env.ts";
 
 import mongoose from "mongoose";
 
@@ -9,7 +8,8 @@ const port = 3000;
 
 async function startServer() {
   try {
-    await mongoose.connect(process.env.MONGO_URI!);
+    // await mongoose.connect(process.env.MONGO_URI!);
+    await mongoose.connect(env.mongoUri!);
 
     console.log(`Connection established.`);
 
