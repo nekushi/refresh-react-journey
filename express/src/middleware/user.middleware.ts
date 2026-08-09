@@ -58,3 +58,19 @@ export const validateEmail = (
 
   return next();
 };
+
+export const validatePassword = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const password = req.body.password;
+  // const passwordRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // if (!passwordRegex.test(password)) {
+  if (typeof password !== "string" || password.trim() === "") {
+    throw new AppError(400, "Invalid password.");
+  }
+
+  return next();
+};

@@ -10,7 +10,6 @@ import {
   validateUser,
 } from "../services/user.service.ts";
 import { statusMessages } from "../constants/statusMessages.ts";
-import { AppError } from "../utils/appError.ts";
 
 export const getUsers = async (req: Request, res: Response) => {
   const users = await fetchUsers();
@@ -48,9 +47,9 @@ export const postLogin = (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const { username, email } = req.body;
+  const { username, email, password } = req.body;
 
-  const user = await createNewUser(username, email);
+  const user = await createNewUser(username, email, password);
 
   return res
     .status(201)
@@ -59,9 +58,9 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const patchUser = async (req: Request, res: Response) => {
   const userId = req.params.id as string;
-  const { username, email } = req.body;
+  const { username, email, password } = req.body;
 
-  const patchedUser = await patchCurrentUser(userId, username, email);
+  const patchedUser = await patchCurrentUser(userId, username, email, password);
 
   return res
     .status(200)

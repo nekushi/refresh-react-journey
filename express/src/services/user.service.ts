@@ -2,7 +2,9 @@ import User from "../models/User.ts";
 
 import { users } from "../constants/users.ts";
 import type { TypeUser } from "../types/user.type.ts";
-import { AppError } from "../utils/appError.ts";
+import { AppError } from "../utils/AppError.ts";
+
+import bcrypt from "bcrypt";
 
 export const fetchUsers = async () => {
   return await User.find();
@@ -41,10 +43,17 @@ export const validateUser = (user: TypeUser | null, password: string) => {
   return foundUser;
 };
 
-export const createNewUser = async (username: string, email: string) => {
+export const createNewUser = async (
+  username: string,
+  email: string,
+  password: string,
+) => {
+  const hashedPassword = await bcrypt.hash(password, 12);
+
   const newUser = {
     username,
     email,
+    password: hashedPassword,
   };
 
   return await User.create(newUser);
@@ -60,12 +69,16 @@ export const patchCurrentUser = async (
   id: string,
   username: string,
   email: string,
+  password: string,
 ) => {
+  const hashedPassword = await bcrypt.hash(password, 12);
+
   const patchedUser = await User.findOneAndUpdate(
     { _id: id },
     {
       username,
       email,
+      password: hashedPassword,
     },
     {
       returnDocument: "after",
