@@ -18,7 +18,7 @@ export const getUser = async (
 
   return res
     .status(200)
-    .json({ type: "success", message: statusMessages[200], user });
+    .json({ type: "success", message: statusMessages[200], authUser: user });
 };
 
 export const postAuthLogin = async (req: Request, res: Response) => {
@@ -27,7 +27,7 @@ export const postAuthLogin = async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json({ type: "success", message: statusMessages[200], user });
+    .json({ type: "success", message: statusMessages[200], authUser: user });
 };
 
 export const postAuthRegister = async (req: Request, res: Response) => {
