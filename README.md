@@ -58,3 +58,11 @@
 - 14 - Authentication
   <br />
   Used jsonwebtoken library to generate and validate user token
+
+- 15 - Persist login (localStorage) [to be refactored]
+  <br />
+  Avoid losing state after page refresh (bad practice; practice anyway)
+
+- 16 - Persist login (Cookies)
+  <br />
+  **_Incoming_**
