@@ -14,7 +14,7 @@ import helloRoutes from "./routes/hello.routes.ts";
 import userRoutes from "./routes/user.routes.ts";
 import authRoutes from "./routes/auth.routes.ts";
 
-import { errorHandler } from "./middleware/errorHandler.ts";
+import { errorHandler } from "./middleware/error.middleware.ts";
 
 export const app: Express = express();
 
