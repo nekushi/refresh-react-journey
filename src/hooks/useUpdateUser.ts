@@ -23,18 +23,18 @@ export default function useUpdateUser() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const id = String(auth.user?.id);
-      const updatedUser = await updateUser(id, newUsername!, newPassword!);
+    // try {
+    //   const id = String(auth.user?._id);
+    //   const updatedUser = await updateUser(id, newUsername!, newPassword!);
 
-      if (updatedUser.ok) {
-        auth.setUser(updatedUser.user!);
-      }
+    //   if (updatedUser.ok) {
+    //     auth.setUser(updatedUser.result!);
+    //   }
 
-      console.log(updatedUser);
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    //   console.log(updatedUser);
+    // } catch (err) {
+    //   console.error(`ERROR: ${err}`);
+    // }
   };
 
   return {

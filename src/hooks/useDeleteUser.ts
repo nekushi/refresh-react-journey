@@ -7,21 +7,21 @@ export default function useDeleteUser() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const deletedUser = await deleteUser(auth.user?.id!);
+    // try {
+    //   const deletedUser = await deleteUser(auth.user?._id);
 
-      if (!deletedUser.ok) {
-        throw new Error(deletedUser.message);
-      }
+    //   if (!deletedUser.ok) {
+    //     throw new Error(deletedUser.message);
+    //   }
 
-      handleLogout();
-    } catch (err) {
-      console.error(`ERROR: ${err}`);
-    }
+    //   handleLogout();
+    // } catch (err) {
+    //   console.error(`ERROR: ${err}`);
+    // }
   };
 
   return {
-    id: auth.user?.id,
+    id: auth.user?._id,
     handleSubmit,
   };
 }
