@@ -4,7 +4,7 @@
 
 - 1 - React routing
   <br />
-  react-router-dom installation, and child Outlet component to pass props from parent component
+  `react-router-dom` installation, and child Outlet component to pass props from parent component
 
 - 2 - Application of (_React routing_) topic
   <br />
@@ -54,3 +54,7 @@
   - Create an asyncHandler to avoid try/catch in every service layer — catches error in service layer.
   - Create an AppError that extends the Error object to pass error status code.
   - Create an errorHandler to throw an error Response to the frontend.
+
+- 14 - Authentication
+  <br />
+  Used jsonwebtoken library to generate and validate user token
