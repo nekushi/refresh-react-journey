@@ -20,6 +20,15 @@ export default function LoginPage() {
             />
           </label>
           <label htmlFor="">
+            <span className="form-label">Email:</span>
+            <input
+              type="text"
+              value={user.emailChange.value}
+              onChange={user.emailChange.onChange}
+              className="form-input-box"
+            />
+          </label>
+          <label htmlFor="">
             <span className="form-label">Password:</span>
             <input
               type="password"

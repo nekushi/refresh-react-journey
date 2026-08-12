@@ -9,11 +9,16 @@ export default function useLoginForm() {
   const { handleLogin } = useAuth();
 
   const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +31,7 @@ export default function useLoginForm() {
     setIsPending(true);
 
     try {
-      const result = await loginUser(username, password);
-
-      console.log(result);
-
-      if (!result.user) return;
-
-      handleLogin(result.user!);
+      await handleLogin(username, email, password);
     } catch (err) {
       console.error(`ERROR: ${err}`);
     } finally {
@@ -42,6 +41,7 @@ export default function useLoginForm() {
 
   return {
     usernameChange: { value: username, onChange: handleUsernameChange },
+    emailChange: { value: email, onChange: handleEmailChange },
     passwordChange: { value: password, onChange: handlePasswordChange },
     isPending,
     handleSubmit,

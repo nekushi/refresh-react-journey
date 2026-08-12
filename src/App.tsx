@@ -6,12 +6,50 @@ import ImagesPage from "./pages/menu/get-images/GetImages";
 import SettingsPage from "./pages/menu/settings/Settings";
 
 import { AuthContext } from "./contexts/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { TypeUser } from "./types/users.type";
 import HelloPage from "./pages/hello-page/HelloPage";
+import { getCurrentUser } from "./api/auth/get-current-user";
 
 export function App() {
   const [user, setUser] = useState<TypeUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
+    const restoreAuth = async () => {
+      try {
+        const res = await getCurrentUser(token);
+
+        if (res.type === "error") {
+          setUser(null);
+          throw new Error(res.message);
+        }
+
+        console.log(res.ok);
+        console.log(res.status);
+        console.log(res.type);
+        console.log(res.message);
+        console.log(res.authUser?.username);
+
+        setUser(res.authUser!);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    restoreAuth();
+  }, []); // make this a custom hook soon
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
