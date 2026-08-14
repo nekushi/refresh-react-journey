@@ -65,4 +65,4 @@
 
 - 16 - Persist login (Cookies)
   <br />
-  **_Incoming_**
+  Migrate from using localStorage as JWT holder, to using cookies
