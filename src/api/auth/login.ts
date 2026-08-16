@@ -1,16 +1,17 @@
 import type {
   TypeAuthResponse,
   TypeResultResponse,
-  TypeUserWithTokenResponse,
+  TypeUserResponse,
 } from "../../types/auth.type";
 
 export async function postLogin(
   username: string,
   email: string,
   password: string,
-): Promise<TypeAuthResponse<TypeUserWithTokenResponse>> {
+): Promise<TypeAuthResponse<TypeUserResponse>> {
   const res = await fetch(`http://localhost:3000/auth/login`, {
     method: "POST",
+    credentials: "include",
     body: JSON.stringify({
       username,
       email,
@@ -21,14 +22,13 @@ export async function postLogin(
     },
   });
 
-  const result: TypeResultResponse<TypeUserWithTokenResponse> =
-    await res.json();
+  const result: TypeResultResponse<TypeUserResponse> = await res.json();
 
   if (!res.ok) {
     return {
       ok: res.ok,
       status: res.status,
-      type: "success",
+      type: "error",
       message: result.message,
     };
   }

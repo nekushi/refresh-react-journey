@@ -15,17 +15,12 @@ export function App() {
   const [user, setUser] = useState<TypeUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log(`USER: ${user}`);
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
-
     const restoreAuth = async () => {
       try {
-        const res = await getCurrentUser(token);
+        const res = await getCurrentUser();
 
         if (res.type === "error") {
           setUser(null);
@@ -39,6 +34,7 @@ export function App() {
         console.log(res.authUser?.username);
 
         setUser(res.authUser!);
+        console.log(`RESTORED: ${res.authUser}`);
       } catch (err) {
         console.log(err);
       } finally {
@@ -49,21 +45,25 @@ export function App() {
     restoreAuth();
   }, []); // make this a custom hook soon
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<LoginPage />} />
-          <Route path="/hello" element={<HelloPage />} />
-          <Route element={<MenuLayout />}>
-            <Route path="/dashboard" element={<MenuDashboardPage />} />
-            <Route path="/images" element={<ImagesPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<LoginPage />} />
+            <Route path="/hello" element={<HelloPage />} />
+            <Route element={<MenuLayout />}>
+              <Route path="/dashboard" element={<MenuDashboardPage />} />
+              <Route path="/images" element={<ImagesPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      )}
     </AuthContext.Provider>
   );
 }

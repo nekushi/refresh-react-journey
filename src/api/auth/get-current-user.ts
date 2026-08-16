@@ -2,17 +2,13 @@ import type {
   TypeAuthResponse,
   TypeResultResponse,
   TypeUser,
-  TypeUserWithTokenResponse,
+  // TypeUserWithTokenResponse,
 } from "../../types/auth.type";
 
-export async function getCurrentUser(
-  token: string,
-): Promise<TypeAuthResponse<TypeUser>> {
+export async function getCurrentUser(): Promise<TypeAuthResponse<TypeUser>> {
   const res = await fetch(`http://localhost:3000/auth/`, {
     method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: "include",
   });
 
   const result: TypeResultResponse<TypeUser> = await res.json();

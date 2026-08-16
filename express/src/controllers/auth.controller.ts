@@ -16,6 +16,9 @@ export const getUser = async (
 
   const user = await fetchUser(id);
 
+  console.log(`user from get`);
+  console.log(user);
+
   return res
     .status(200)
     .json({ type: "success", message: statusMessages[200], authUser: user });
@@ -25,9 +28,21 @@ export const postAuthLogin = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   const user = await postValidateLogin(username, email, password);
 
-  return res
-    .status(200)
-    .json({ type: "success", message: statusMessages[200], authUser: user });
+  res.cookie("token", user.token, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    maxAge: 5 * 60 * 1000, // 5 mins
+  });
+
+  console.log(`user.user`);
+  console.log(user.user);
+
+  return res.status(200).json({
+    type: "success",
+    message: statusMessages[200],
+    authUser: user.user,
+  });
 };
 
 export const postAuthRegister = async (req: Request, res: Response) => {

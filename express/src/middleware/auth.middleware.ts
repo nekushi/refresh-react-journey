@@ -9,13 +9,11 @@ export const authenticate = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.token;
 
-  if (!authHeader?.startsWith("Bearer ")) {
+  if (!token) {
     throw new AppError(401, "Invalid token.");
   }
-
-  const token = authHeader.split(" ")[1];
 
   const decoded = jwt.verify(token, env.jwtSecret) as AuthPayload; // error === throw error with global error handler
 

@@ -18,7 +18,6 @@ export default function useAuth() {
     throw new Error("useAuth must be used within an AuthProvider.");
   }
 
-  // const handleLogin = async (user: TypeUser) => {
   const handleLogin = async (
     username: string,
     email: string,
@@ -32,9 +31,7 @@ export default function useAuth() {
 
     console.log(result.authUser?.user);
 
-    localStorage.setItem("token", result.authUser.token);
-
-    auth.setUser(result.authUser.user);
+    auth.setUser(result.authUser);
 
     navigate("/dashboard");
   };

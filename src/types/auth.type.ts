@@ -10,8 +10,7 @@ export type TypeUser = {
   password: string;
 };
 
-export type TypeUserWithTokenResponse = {
-  token: string;
+export type TypeUserResponse = {
   user: TypeUser;
 };
 
