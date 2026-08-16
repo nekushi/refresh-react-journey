@@ -53,3 +53,11 @@ export const postAuthRegister = async (req: Request, res: Response) => {
     .status(201)
     .json({ type: "success", message: statusMessages[201], user });
 };
+
+export const postAuthLogout = async (req: Request, res: Response) => {
+  res.clearCookie("token");
+
+  return res
+    .status(200)
+    .json({ type: "success", message: "Logout successfully." });
+};

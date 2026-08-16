@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getUser,
   postAuthLogin,
+  postAuthLogout,
   postAuthRegister,
 } from "../controllers/auth.controller.ts";
 import {
@@ -29,5 +30,6 @@ router.post(
   validatePassword,
   postAuthRegister,
 );
+router.post("/logout", postAuthLogout);
 
 export default router;

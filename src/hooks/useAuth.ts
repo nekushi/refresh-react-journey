@@ -9,6 +9,7 @@ import type {
   TypeUserResultWithTokenResponse,
 } from "../types/users.type";
 import { postLogin } from "../api/auth/login";
+import { postLogout } from "../api/auth/logout";
 
 export default function useAuth() {
   const navigate = useNavigate();
@@ -36,8 +37,15 @@ export default function useAuth() {
     navigate("/dashboard");
   };
 
-  const handleLogout = () => {
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await postLogout();
+
+      auth.setUser(null);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return { auth, handleLogin, handleLogout };
