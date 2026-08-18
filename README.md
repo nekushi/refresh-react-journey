@@ -66,3 +66,7 @@
 - 16 - Persist login (Cookies)
   <br />
   Migrate from using localStorage as JWT holder, to using cookies
+
+- 17 - Public and Protected routes
+  <br />
+  Check of cookies whether a user can access a protected routes
