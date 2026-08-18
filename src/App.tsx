@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import type { TypeUser } from "./types/users.type";
 import HelloPage from "./pages/hello-page/HelloPage";
 import { getCurrentUser } from "./api/auth/get-current-user";
+import PublicRoute from "./layouts/routes/PublicRoute";
+import ProtectedRoute from "./layouts/routes/ProtectedRoute";
 
 export function App() {
   const [user, setUser] = useState<TypeUser | null>(null);
@@ -54,12 +56,16 @@ export function App() {
       ) : (
         <BrowserRouter>
           <Routes>
-            <Route index element={<LoginPage />} />
-            <Route path="/hello" element={<HelloPage />} />
-            <Route element={<MenuLayout />}>
-              <Route path="/dashboard" element={<MenuDashboardPage />} />
-              <Route path="/images" element={<ImagesPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
+            <Route element={<PublicRoute />}>
+              <Route index element={<LoginPage />} />
+              <Route path="/hello" element={<HelloPage />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route element={<MenuLayout />}>
+                <Route path="/dashboard" element={<MenuDashboardPage />} />
+                <Route path="/images" element={<ImagesPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>

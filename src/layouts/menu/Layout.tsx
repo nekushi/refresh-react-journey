@@ -1,3 +1,4 @@
+import useAuth from "../../hooks/useAuth";
 import "./Layout.css";
 
 import { Outlet, useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ const childrenStyle: React.CSSProperties = {
 };
 
 export default function MenuLayout() {
+  const { handleLogout } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -29,12 +31,7 @@ export default function MenuLayout() {
               );
             })}
           </nav>
-          <button
-            onClick={() => {
-              navigate("");
-            }}
-            className="logout"
-          >
+          <button onClick={handleLogout} className="logout">
             Logout
           </button>
         </aside>
