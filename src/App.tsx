@@ -12,12 +12,13 @@ import HelloPage from "./pages/hello-page/HelloPage";
 import { getCurrentUser } from "./api/auth/get-current-user";
 import PublicRoute from "./layouts/routes/PublicRoute";
 import ProtectedRoute from "./layouts/routes/ProtectedRoute";
+import RequireRole from "./layouts/routes/RequireRole";
 
 export function App() {
   const [user, setUser] = useState<TypeUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(`USER: ${user}`);
+  console.log(`USER: ${JSON.stringify(user)}`);
 
   useEffect(() => {
     const restoreAuth = async () => {
@@ -29,11 +30,11 @@ export function App() {
           throw new Error(res.message);
         }
 
-        console.log(res.ok);
-        console.log(res.status);
-        console.log(res.type);
-        console.log(res.message);
-        console.log(res.authUser?.username);
+        // console.log(res.ok);
+        // console.log(res.status);
+        // console.log(res.type);
+        // console.log(res.message);
+        // console.log(res.authUser?.username);
 
         setUser(res.authUser!);
         console.log(`RESTORED: ${res.authUser}`);
@@ -62,9 +63,13 @@ export function App() {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route element={<MenuLayout />}>
-                <Route path="/dashboard" element={<MenuDashboardPage />} />
-                <Route path="/images" element={<ImagesPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
+                <Route element={<RequireRole roles={["ADMIN"]} />}>
+                  <Route path="/dashboard" element={<MenuDashboardPage />} />
+                </Route>
+                <Route element={<RequireRole roles={["ADMIN", "USER"]} />}>
+                  <Route path="/images" element={<ImagesPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                </Route>
               </Route>
             </Route>
           </Routes>

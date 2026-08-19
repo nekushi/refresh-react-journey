@@ -3,10 +3,9 @@ import "./Layout.css";
 
 import { Outlet, useNavigate } from "react-router-dom";
 
-// const childrenStyle: CSSModuleClasses = {
-const childrenStyle: React.CSSProperties = {
-  height: "100%",
-};
+// const childrenStyle: React.CSSProperties = {
+//   height: "100%",
+// };
 
 export default function MenuLayout() {
   const { handleLogout } = useAuth();
@@ -37,9 +36,9 @@ export default function MenuLayout() {
         </aside>
         <div className="outlets">
           <Outlet
-            context={{
-              childrenStyle,
-            }}
+          // context={{
+          //   childrenStyle,
+          // }}
           />
         </div>
       </div>

@@ -3,12 +3,14 @@ export type TypeAuthContext = {
   setUser: React.Dispatch<React.SetStateAction<TypeUser | null>>;
 };
 
+export type Role = "ADMIN" | "USER";
+
 export type TypeUser = {
   _id: number;
   username: string;
   email: string;
   password: string;
-  role: "ADMIN" | "USER";
+  role: Role;
 };
 
 export type TypeUserResponse = {

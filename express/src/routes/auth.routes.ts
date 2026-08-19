@@ -16,7 +16,7 @@ import { requireRole } from "../middleware/auth.middleware.ts";
 
 const router = Router();
 
-router.get("/", asyncHandler(authenticate), requireRole("ADMIN"), getUser);
+router.get("/", asyncHandler(authenticate), getUser);
 router.post(
   "/login",
   validateUsername,
