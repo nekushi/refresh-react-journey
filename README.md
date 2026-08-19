@@ -70,3 +70,7 @@
 - 17 - Public and Protected routes
   <br />
   Check of cookies whether a user can access a protected routes
+
+- 18 - Authorization
+  <br />
+  Frontend UX authorization, backend authorization, ownership
