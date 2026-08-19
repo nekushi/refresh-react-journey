@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 export default function PublicRoute() {
   const { auth } = useAuth();
 
-  if (auth.user) {
+  if (auth.user && auth.user.role === "ADMIN") {
     return <Navigate to="/dashboard" replace />;
   }
 

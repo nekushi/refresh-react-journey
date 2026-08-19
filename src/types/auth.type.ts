@@ -8,6 +8,7 @@ export type TypeUser = {
   username: string;
   email: string;
   password: string;
+  role: "ADMIN" | "USER";
 };
 
 export type TypeUserResponse = {

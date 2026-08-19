@@ -29,6 +29,7 @@ export const postValidateLogin = async (
   const token = jwt.sign(
     {
       id: foundUser._id.toString(),
+      role: foundUser.role,
     },
     env.jwtSecret!,
     {

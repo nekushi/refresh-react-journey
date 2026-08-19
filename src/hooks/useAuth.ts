@@ -33,8 +33,6 @@ export default function useAuth() {
     console.log(result.authUser?.user);
 
     auth.setUser(result.authUser);
-
-    navigate("/dashboard");
   };
 
   const handleLogout = async () => {

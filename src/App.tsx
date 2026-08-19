@@ -7,7 +7,7 @@ import SettingsPage from "./pages/menu/settings/Settings";
 
 import { AuthContext } from "./contexts/AuthContext";
 import { useEffect, useState } from "react";
-import type { TypeUser } from "./types/users.type";
+import type { TypeUser } from "./types/auth.type";
 import HelloPage from "./pages/hello-page/HelloPage";
 import { getCurrentUser } from "./api/auth/get-current-user";
 import PublicRoute from "./layouts/routes/PublicRoute";
